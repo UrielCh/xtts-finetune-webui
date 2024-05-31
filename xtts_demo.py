@@ -1,25 +1,20 @@
 import argparse
-import glob
 import os
 import shutil
-import sys
 import tempfile
 import traceback
 from pathlib import Path
 
 import gradio as gr
-import librosa.display
-import numpy as np
 import torch
 import torchaudio
 from TTS.tts.configs.xtts_config import XttsConfig
 from TTS.tts.models.xtts import Xtts
 
-from utils.formatter import find_latest_best_model, format_audio_list
+from utils.formatter import format_audio_list
 from utils.gpt_train import train_gpt
 
 # Clear logs
-
 
 def remove_log_file(file_path):
     log_file = Path(file_path)

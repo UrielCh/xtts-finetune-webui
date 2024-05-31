@@ -7,6 +7,8 @@ import pandas
 import torch
 import torchaudio
 from faster_whisper import WhisperModel
+from faster_whisper.transcribe import Word
+
 from tqdm import tqdm
 
 # from TTS.tts.layers.xtts.tokenizer import multilingual_cleaners
@@ -171,10 +173,10 @@ def format_audio_list(
         # print(segments)
         i = 0
         sentence = ""
-        sentence_start = None
+        sentence_start: float | None = None
         first_word = True
         # added all segments words in a unique list
-        words_list = []
+        words_list: list[Word] = []
         for _, segment in enumerate(segments):
             words = list(segment.words)
             words_list.extend(words)
@@ -190,7 +192,7 @@ def format_audio_list(
                     sentence_start = max(sentence_start - buffer, 0)
                 else:
                     # get previous sentence end
-                    previous_word_end = words_list[word_idx - 1].end
+                    previous_word_end: float = words_list[word_idx - 1].end
                     # add buffer or get the silence midle between the previous
                     # sentence and the current one
                     sentence_start = max(
